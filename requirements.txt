@@ -1,0 +1,6 @@
+flask
+flask-restful
+flasgger
+requests
+pytest
+sparqlwrapper
