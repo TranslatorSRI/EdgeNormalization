@@ -7,16 +7,16 @@ class EdgeNormalizer:
         self.biolink = biolink()
         self.ubergraph = UberGraph()
 
-    def resolve(self,identifier):
+    def resolve_curie(self,identifier):
         """Resolve takes a curie and returns the closest edge from biolink model."""
         # If the input is an exact match, return the bl edge
         # If the input is an RO, see if it there is a superclass that maps to a bl model
         # If it's something else, check the lookup table
         # Failing all else, return some generic relationship from BL
-        bl_edge = self.biolink.get_edge_by_mapping(identifier)
+        bl_edge = self.biolink.get_edge_by_iri(identifier)
         if bl_edge is not None:
             #The service may or may not snakify for us.  But Normalizer should make sure
-            return Text.snakify(bl_edge)
+            bl_edge.label = Text.snakify(bl_edge.label)
         if identifier.startswith('RO'):
             return self.resolve_ro(identifier,self.biolink.get_root_edges(),None)
         return None

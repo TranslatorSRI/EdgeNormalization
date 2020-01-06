@@ -1,6 +1,6 @@
 import yaml
 from os import path
-from collections import defaultdict
+from collections import defaultdict,namedtuple
 from src.util import Text
 
 class biolink:
@@ -9,8 +9,8 @@ class biolink:
     on a biolink model service."""
     def __init__(self):
         #Read by hand for now
-        self.name_to_iri,self.edge_tree,self.root_edges = self.pull_from_yaml()
-        self.iri_to_name = { v:k for k,v in self.name_to_iri.items() }
+        self.iri_to_name,self.edge_tree,self.root_edges = self.pull_from_yaml()
+        self.name_to_iri = { v:k for k,v in self.iri_to_name.items() }
 
     def pull_from_yaml(self):
         uri_to_slot = {}
@@ -40,9 +40,14 @@ class biolink:
 
     def get_iri_by_edge(self,edge):
         try:
-            return self.name_to_iri[edge]
+            edgename = Text.snakify(edge)
+            return self.name_to_iri[edgename]
         except:
             return None
+
+    def get_edge_by_iri(self,curie):
+        Edge = namedtuple('edge',['identifier','label'])
+        edge = Edge()
 
     def get_root_edges(self):
         return list(self.root_edges)
