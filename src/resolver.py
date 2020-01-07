@@ -13,10 +13,10 @@ class EdgeNormalizer:
         # If the input is an RO, see if it there is a superclass that maps to a bl model
         # If it's something else, check the lookup table
         # Failing all else, return some generic relationship from BL
-        bl_edge = self.biolink.get_edge_by_iri(identifier)
-        if bl_edge is not None:
+        bl_label = self.biolink.get_label_by_iri(identifier)
+        if bl_label is not None:
             #The service may or may not snakify for us.  But Normalizer should make sure
-            bl_edge.label = Text.snakify(bl_edge.label)
+            bl_label = Text.snakify(bl_label)
         if identifier.startswith('RO'):
             return self.resolve_ro(identifier,self.biolink.get_root_edges(),None)
         return None

@@ -1,6 +1,6 @@
 import yaml
 from os import path
-from collections import defaultdict,namedtuple
+from collections import defaultdict
 from src.util import Text
 
 class biolink:
@@ -32,22 +32,18 @@ class biolink:
                     pass
         return uri_to_slot,edge_tree,roots
 
-    def get_edge_by_iri(self,curie):
+    def get_label_by_iri(self,curie):
         try:
             return self.iri_to_name[curie]
         except:
             return None
 
-    def get_iri_by_edge(self,edge):
+    def get_iri_by_label(self,edge):
         try:
             edgename = Text.snakify(edge)
             return self.name_to_iri[edgename]
         except:
             return None
-
-    def get_edge_by_iri(self,curie):
-        Edge = namedtuple('edge',['identifier','label'])
-        edge = Edge()
 
     def get_root_edges(self):
         return list(self.root_edges)
