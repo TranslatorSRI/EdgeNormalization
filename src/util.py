@@ -5,6 +5,7 @@ import yaml
 from collections import namedtuple
 import copy
 from logging.handlers import RotatingFileHandler
+from src.LabeledID import LabeledID
 
 #loggers = {}
 class LoggingUtil(object):
@@ -70,8 +71,11 @@ class Text:
 
     @staticmethod
     def get_curie (text):
+        if isinstance(text,LabeledID):
+            text = text.identifier
+        #Assume it's a string
         return text.upper().split(':', 1)[0] if ':' in text else None
-        
+
     @staticmethod
     def un_curie (text):
         return ':'.join(text.split (':', 1)[1:]) if ':' in text else text

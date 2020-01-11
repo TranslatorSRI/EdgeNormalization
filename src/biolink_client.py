@@ -9,11 +9,12 @@ class biolink:
     on a biolink model service."""
     def __init__(self):
         #Read by hand for now
-        self.iri_to_name,self.edge_tree,self.root_edges = self.pull_from_yaml()
+        self.iri_to_name,self.mapping_to_name,self.edge_tree,self.root_edges = self.pull_from_yaml()
         self.name_to_iri = { v:k for k,v in self.iri_to_name.items() }
 
     def pull_from_yaml(self):
         uri_to_slot = {}
+        mapping_to_slot = {}
         edge_tree = defaultdict(list)
         roots = set()
         with open(path.join(path.dirname(path.abspath(__file__)),'..','data','biolink-model.yaml')) as blfile:
@@ -22,21 +23,25 @@ class biolink:
             for slot_name,slot in slots.items():
                 slot_name = Text.snakify(slot_name)
                 if 'is_a' in slot:
-                    edge_tree[slot['is_a']].append(slot_name)
+                    edge_tree[Text.snakify(slot['is_a'])].append(slot_name)
                 else:
                     roots.add(slot_name)
+                if 'mappings' in slot:
+                    for m in slot['mappings']:
+                        mapping_to_slot[m] = slot_name
                 try:
                     slot_uri = slot['slot_uri']
                     uri_to_slot[slot_uri] = slot_name
                 except:
                     pass
-        return uri_to_slot,edge_tree,roots
+        return uri_to_slot,mapping_to_slot,edge_tree,roots
 
     def get_label_by_iri(self,curie):
-        try:
+        if curie in self.iri_to_name:
             return self.iri_to_name[curie]
-        except:
-            return None
+        elif curie in self.mapping_to_name:
+            return self.mapping_to_name[curie]
+        return None
 
     def get_iri_by_label(self,edge):
         try:
@@ -46,7 +51,11 @@ class biolink:
             return None
 
     def get_root_edges(self):
-        return list(self.root_edges)
+        """There are multiple slots that don't have a parent.  But most of them are to associations
+        rather than edges between named entities.   This should be worked out from the model itself
+        somehow.  But for the moment, a bit of a cheat."""
+        return ['related_to']
+        #return list(self.root_edges)
 
     def get_children(self,edge_name):
         return self.edge_tree[edge_name]
