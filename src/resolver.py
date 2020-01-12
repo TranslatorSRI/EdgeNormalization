@@ -15,36 +15,34 @@ class EdgeNormalizer:
         # If it's something else, check the lookup table
         # Failing all else, return some generic relationship from BL
         bl_label = self.biolink.get_label_by_iri(identifier)
-        if bl_label is not None:
+        #returns a list, but it might be empty
+        if len(bl_label) > 0:
             #The service may or may not snakify for us.  But Normalizer should make sure
-            bl_label = Text.snakify(bl_label)
+            bl_label = Text.snakify(bl_label[0])
         else:
             if identifier.startswith('RO'):
-                bl_label = self.resolve_ro(identifier,self.biolink.get_root_edges(),None)
+                bl_label = self.resolve_ro(identifier)
+            else:
+                bl_label = None
         if bl_label is not None:
             iri = self.biolink.get_iri_by_label(bl_label)
             Edge = namedtuple('Edge',['identifier','label'])
             return Edge(iri,bl_label)
         return None
 
-    def resolve_ro(self,ro_ident,current,recent_true):
-        bests=[]
-        for possible in current:
-            possible_iri = self.biolink.get_iri_by_label(possible)
-            if possible_iri is None or Text.get_curie(possible_iri) != 'RO':
-                #cant rule it out, try the children
-                bests.append(self.resolve_ro(ro_ident,self.biolink.get_children(possible),recent_true))
-            elif self.is_subclass(ro_ident,possible_iri):
-                bests.append(self.resolve_ro(ro_ident,self.biolink.get_children(possible),possible_iri))
-            else:
-                bests.append(recent_true)
-        thebest = list(filter(lambda x: x is not None, bests))
-        if len(thebest) == 1:
-            return thebest[0]
-        return recent_true
+    def resolve_ro(self,ro_ident):
+        """Given an ro_identifier, walk up the RO hierarchy checking BL to find a match"""
+        bl_label = []
+        ro_idents = [ro_ident]
+        new_ros = []
+        while True:
+            for ro in ro_idents:
+                new_ros += self.ubergraph.get_property_parent(ro)
+            if len(new_ros) == 0:
+                return None
+            for ro in new_ros:
+                bl_label = self.biolink.get_label_by_iri(ro)
+                if len(bl_label) > 0:
+                    return bl_label[0]
+            ro_idents = new_ros
 
-    def is_subclass(self,parent,child):
-        return self.ubergraph.is_subclass(parent,child)
-
-    def get_parent(self,child):
-        return self.ubergraph.get_parent(child)
