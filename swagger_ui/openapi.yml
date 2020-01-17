@@ -1,0 +1,39 @@
+openapi: 3.0.2
+info:
+  title: Edge Normalization Service
+  description: 'A REST service for resolving predicates to Biolink compliant predicates.'
+  version: '1.0.0'
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+paths:
+  /resolve:
+    get:
+      tags:
+        - redis
+      summary: 'Get value(s) for key(s)'
+      description: ''
+      parameters:
+        - in: query
+          name: key
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - SEMMEDDB:DISRUPTS
+              - SEMMEDDB:ASSOCIATED_WITH
+      responses:
+        '200':
+          description: Results
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  "SEMMEDDB:DISRUPTS":
+                    "identifier": "SEMMEDDB:DISRUPTS"
+                    "label": "disrupts"
+                  "SEMMEDDB:ASSOCIATED_WITH":
+                    "identifier": "owl:ObjectProperty"
+                    "label": "related_to"

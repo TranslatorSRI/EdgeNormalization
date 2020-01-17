@@ -1,6 +1,7 @@
-flask
-flask-restful
-flasgger
 requests
 pytest
 sparqlwrapper
+sanic==19.9.0
+pyyaml
+swagger_ui_bundle
+jinja2
