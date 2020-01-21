@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-normalization-deployment
+  labels:
+    service: edge-normalization
+    app: edge-normalization
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edge-normalization
+  template:
+    metadata:
+      labels:
+        app: edge-normalization
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: edge-normalization
+        image: renciorg/edgenormalization
+        ports:
+          - containerPort: 8145
+            name: http
+      restartPolicy: Always

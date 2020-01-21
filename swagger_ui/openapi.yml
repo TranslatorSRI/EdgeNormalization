@@ -22,7 +22,6 @@ paths:
               type: string
             example:
               - SEMMEDDB:DISRUPTS
-              - SEMMEDDB:ASSOCIATED_WITH
       responses:
         '200':
           description: Results
@@ -34,6 +33,3 @@ paths:
                   "SEMMEDDB:DISRUPTS":
                     "identifier": "SEMMEDDB:DISRUPTS"
                     "label": "disrupts"
-                  "SEMMEDDB:ASSOCIATED_WITH":
-                    "identifier": "owl:ObjectProperty"
-                    "label": "related_to"
