@@ -24,4 +24,4 @@ ADD ./main.py /home/murphy/main.py
 
 
 # setup entrypoint
-ENTRYPOINT ["/home/murphy/main.py"]
+ENTRYPOINT ["python", "/home/murphy/main.py"]
