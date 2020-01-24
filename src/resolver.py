@@ -34,8 +34,8 @@ class EdgeNormalizer:
         """Given an ro_identifier, walk up the RO hierarchy checking BL to find a match"""
         bl_label = []
         ro_idents = [ro_ident]
-        new_ros = []
         while True:
+            new_ros = []
             for ro in ro_idents:
                 new_ros += self.ubergraph.get_property_parent(ro)
             if len(new_ros) == 0:
