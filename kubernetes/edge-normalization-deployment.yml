@@ -18,8 +18,11 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: edge-normalization
-        image: renciorg/edgenormalization
+        image: renciorg/edgenormalization:latest
         ports:
           - containerPort: 8145
             name: http
+        env:
+          - name: BL_HOST
+            value: 'http://robokop.renci.org:8144'
       restartPolicy: Always
