@@ -1,6 +1,11 @@
-from src.util import Text
+from src.util import Text, LoggingUtil
+import logging
 import requests
 import os
+from urllib.parse import quote_plus, unquote_plus
+
+logger = LoggingUtil.init_logging(__name__)
+
 
 class biolink:
     """This class is merely a placeholder.  Currently it's implemented
@@ -10,15 +15,24 @@ class biolink:
         self.url_base = os.environ.get('BL_HOST', 'http://robokop.renci.org:8144')
 
     def get_label_by_iri(self,curie):
-        url = f'{self.url_base}/uri_lookup/{curie}'
-        results = requests.get(url).json()
-        return results
+        # escaping curie for things like CTD:marker/mechanism
+        url = f'{self.url_base}/uri_lookup/{quote_plus(quote_plus(curie))}'
+        results = requests.get(url)
+        if results.status_code == 200:
+            return results.json()
+        else:
+            logger.error(f'[x] Error making request to {url}, status {results.status_code}')
+            return []
 
     def get_iri_by_label(self,concept):
         url = f'{self.url_base}/bl/{Text.snakify(concept)}'
-        result = requests.get(url).json()
-        if result is not None:
-            return result.get('slot_uri', Text.snakify(concept))
+        response = requests.get(url)
+        if response.status_code == 200:
+            result = response.json()
+            if result is not None:
+                return result.get('slot_uri', Text.snakify(concept))
+        else:
+            logger.error(f'[x] Error making request to {url}, status {response.status_code}')
         return None
 
 
