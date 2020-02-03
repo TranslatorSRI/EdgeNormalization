@@ -22,6 +22,9 @@ class EdgeNormalizer:
         else:
             if identifier.startswith('RO'):
                 bl_label = self.resolve_ro(identifier)
+                #If we get to the top of our mini-hierarchy without finding anything, just give a generic relation.
+                if bl_label is None:
+                    bl_label = 'related_to'
             else:
                 bl_label = None
         if bl_label is not None:
