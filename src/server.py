@@ -8,7 +8,7 @@ app.config.ACCESS_LOG = False
 app.blueprint(apidocs_blueprint)
 
 
-@app.route('/resolve')
+@app.route('/resolve_predicate')
 async def resolve(request):
     """
     :param request:
@@ -18,8 +18,8 @@ async def resolve(request):
     """
     result = {}
     resolver = EdgeNormalizer()
-    if isinstance(request.args['key'], list):
-        for key in request.args['key']:
+    if isinstance(request.args['predicate'], list):
+        for key in request.args['predicate']:
             answer = resolver.resolve_curie(key)
             if answer:
                 result[key] = {
@@ -27,7 +27,7 @@ async def resolve(request):
                     'label': answer.label
                 }
     else:
-        key = request.args['key']
+        key = request.args['predicate']
         answer = resolver.resolve_curie(key)
         if answer:
             result[key] = {
