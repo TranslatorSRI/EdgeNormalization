@@ -1,8 +1,9 @@
+[![Build Status](https://travis-ci.com/TranslatorIIPrototypes/EdgeNormalization.svg?branch=master)](https://travis-ci.com/TranslatorIIPrototypes/EdgeNormalization)
+
 # EdgeNormalization
 
 A service for producing relationships compliant with the biolink model.
 
-[![Build Status](https://travis-ci.com/TranslatorIIPrototypes/EdgeNormalization.svg?branch=master)](https://travis-ci.com/TranslatorIIPrototypes/EdgeNormalization)
 ## Installation
 
 Create a virtual environment and activate.
