@@ -1,7 +1,8 @@
 requests
-pytest
 sparqlwrapper
 sanic==19.9.0
 pyyaml
 swagger_ui_bundle
 jinja2
+pytest==5.3.5
+pytest-cov==2.8.1
