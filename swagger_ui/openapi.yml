@@ -11,7 +11,9 @@ paths:
     get:
       tags:
         - redis
-      summary: 'Resolve predicate(s) into Biolink model compliant counterpart(s).'
+      summary: 'Resolve predicate CURIE(s) into Biolink model compliant counterpart(s), first checking the BioLink model for
+      exact matches of a CURIE.  If the CURIE is from the Relation Ontology, the service will check its superproperties until
+       an exact match is found.'
       description: 'Get Biolink model compliant predicate(s) using the passed predicate(s).'
       parameters:
         - in: query
@@ -21,7 +23,8 @@ paths:
             items:
               type: string
             example:
-              - SEMMEDDB:DISRUPTS
+              - SEMMEDDB:CAUSES
+              - RO:0000052
       responses:
         '200':
           description: Results
@@ -30,6 +33,9 @@ paths:
               schema:
                 type: object
                 example:
-                  "SEMMEDDB:DISRUPTS":
-                    "identifier": "SEMMEDDB:DISRUPTS"
-                    "label": "disrupts"
+                  "SEMMEDDB:CAUSES":
+                    "identifier": "RO:0002410"
+                    "label": "causes"
+                  "RO:0000052":
+                    "identifier": "SEMMEDDB:AFFECTS"
+                    "label": "affects"
