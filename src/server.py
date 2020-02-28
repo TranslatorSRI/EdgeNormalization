@@ -17,7 +17,8 @@ async def resolve(request):
     :return:
     """
     result = {}
-    resolver = EdgeNormalizer()
+    version = request.args.get('version', 'latest')
+    resolver = EdgeNormalizer(bl_version=version)
     if isinstance(request.args['predicate'], list):
         for key in request.args['predicate']:
             answer = resolver.resolve_curie(key)

@@ -4,8 +4,8 @@ from src.util import Text
 from collections import namedtuple
 
 class EdgeNormalizer:
-    def __init__(self):
-        self.biolink = biolink()
+    def __init__(self, bl_version='latest'):
+        self.biolink = biolink(bl_version=bl_version)
         self.ubergraph = UberGraph()
 
     def resolve_curie(self,identifier):
