@@ -28,9 +28,16 @@ Build image locally
     
     docker build --tag edgenormalization .
     
-Run
+#### Launch
 
     docker run -it \ 
         -p <port>:8145 \ 
         edgenormalization 
+
+#### Usage
+
+http://"host name or IP":"port"/apidocs
+        
+### Kubernetes 
+Deployment files for Kubernetes are available in the \kubernetes directory.
         
