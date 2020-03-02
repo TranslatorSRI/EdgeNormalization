@@ -25,6 +25,11 @@ paths:
             example:
               - SEMMEDDB:CAUSES
               - RO:0000052
+        - in: query
+          name: version
+          schema:
+            type: string
+            example: "latest"
       responses:
         '200':
           description: Results

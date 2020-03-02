@@ -8,15 +8,13 @@ logger = LoggingUtil.init_logging(__name__)
 
 
 class biolink:
-    """This class is merely a placeholder.  Currently it's implemented
-    by pulling in the biolink yaml.  But it's going to be re-implemented as a client
-    on a biolink model service."""
-    def __init__(self):
-        self.url_base = os.environ.get('BL_HOST', 'http://robokop.renci.org:8144')
+    def __init__(self, bl_version="latest"):
+        self.url_base = os.environ.get('BL_HOST', 'https://bl-lookup-sri.renci.org')
+        self.bl_version = bl_version
 
     def get_label_by_iri(self,curie):
         # escaping curie for things like CTD:marker/mechanism
-        url = f'{self.url_base}/uri_lookup/{quote_plus(quote_plus(curie))}'
+        url = f'{self.url_base}/uri_lookup/{quote_plus(quote_plus(curie))}?version={self.bl_version}'
         results = requests.get(url)
         if results.status_code == 200:
             return results.json()
@@ -25,7 +23,7 @@ class biolink:
             return []
 
     def get_iri_by_label(self,concept):
-        url = f'{self.url_base}/bl/{Text.snakify(concept)}'
+        url = f'{self.url_base}/bl/{Text.snakify(concept)}?version={self.bl_version}'
         response = requests.get(url)
         if response.status_code == 200:
             result = response.json()
