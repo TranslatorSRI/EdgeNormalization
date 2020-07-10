@@ -4,8 +4,7 @@ from src.biolink_client import biolink
 def test_get_iri_by_label():
     bl = biolink()
     #assert 'related_to' in bl.get_root_edges()
-    assert bl.get_iri_by_label('related to') == 'owl:ObjectProperty'
-    assert bl.get_iri_by_label('related_to') == 'owl:ObjectProperty'
+    assert bl.get_iri_by_label('related to') == 'biolink:related_to'
 
 def test_get_label_from_slot_uri():
     bl = biolink()
