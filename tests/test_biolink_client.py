@@ -13,5 +13,5 @@ def test_get_label_from_slot_uri():
 def test_get_label_from_mapping():
     bl = biolink()
     assert bl.get_label_by_iri('SEMMEDDB:CAUSES')[0] == 'causes'
-    assert bl.get_label_by_iri('WD:P1542')[0] == 'causes'
+    assert bl.get_label_by_iri('WIKIDATA:P1542')[0] == 'causes'
 

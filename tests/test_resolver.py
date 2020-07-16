@@ -40,6 +40,6 @@ def test_RO_bad():
     '''RO isn't single rooted.  So it's easy to get to the follow our plan and not get anywhere.  In that case,
     we want to hit related_to by fiat.'''
     r = EdgeNormalizer()
-    edge = r.resolve_curie('RO:0000052')
+    edge = r.resolve_curie('RO:0002004')
     assert edge.label == 'related_to'
     assert edge.identifier == 'biolink:related_to'
