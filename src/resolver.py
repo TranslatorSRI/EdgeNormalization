@@ -14,23 +14,23 @@ class EdgeNormalizer:
         # If the input is an RO, see if it there is a superclass that maps to a bl model
         # If it's something else, check the lookup table
         # Failing all else, return some generic relationship from BL
-        bl_label = self.biolink.get_label_by_iri(identifier)
+        bl_predicates = self.biolink.get_biolink_predicate_by_mapping(identifier)
         #returns a list, but it might be empty
-        if len(bl_label) > 0:
+        if len(bl_predicates) > 0:
             #The service may or may not snakify for us.  But Normalizer should make sure
-            bl_label = Text.snakify(bl_label[0])
+            bl_predicate = bl_predicates[0]['mapping']
         else:
             if identifier.startswith('RO'):
-                bl_label = self.resolve_ro(identifier)
+                bl_predicate = self.resolve_ro(identifier)
                 #If we get to the top of our mini-hierarchy without finding anything, just give a generic relation.
-                if bl_label is None:
-                    bl_label = 'related_to'
+                if bl_predicate is None:
+                    bl_predicate = 'biolink:related_to'
             else:
-                bl_label = None
-        if bl_label is not None:
-            iri = self.biolink.get_iri_by_label(bl_label)
+                bl_predicate = 'biolink:related_to'
+        if bl_predicate is not None:
+            name = self.biolink.get_name_by_predicate(bl_predicate)
             Edge = namedtuple('Edge',['identifier','label'])
-            return Edge(iri,bl_label)
+            return Edge(bl_predicate,name)
         return None
 
     def resolve_ro(self,ro_ident):
@@ -44,8 +44,8 @@ class EdgeNormalizer:
             if len(new_ros) == 0:
                 return None
             for ro in new_ros:
-                bl_label = self.biolink.get_label_by_iri(ro)
-                if len(bl_label) > 0:
-                    return bl_label[0]
+                bl_predicate = self.biolink.get_biolink_predicate_by_mapping(ro)
+                if len(bl_predicate) > 0:
+                    return bl_predicate[0]['mapping']
             ro_idents = new_ros
 
