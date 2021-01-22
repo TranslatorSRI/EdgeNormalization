@@ -6,9 +6,22 @@ info:
 The <a href="https://bl-lookup-sri.renci.org/apidocs">Biolink Lookup Service</a> can find predicates if they have an exact mapping in the model.  The EdgeNormalization service takes this a step further, and attempts to find the best match to a Biolink predicate, even if there is not an explicit mapping.
 '
   version: '1.0.0'
+  contact:
+    email: bizon@renci.org
+    name: Chris Bizon
+    x-id: https://github.com/cbizon
+    x-role: responsible developer
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
+  termsOfService: http://linkmissing
+  x-translator:
+    component: Utility
+    teams:
+      - Standards Reference Implementation Team
+servers:
+  - description: Default server
+    url: https://edgenormalization-sri.renci.org/apidocs/
 paths:
   /resolve_predicate:
     get:
