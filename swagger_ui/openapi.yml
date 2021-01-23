@@ -14,7 +14,7 @@ The <a href="https://bl-lookup-sri.renci.org/apidocs">Biolink Lookup Service</a>
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
-  termsOfService: http://robokop.renci.org:7055/tos?service_long=edgenormalization&provider_long=SRI
+  termsOfService: http://robokop.renci.org:7055/tos?service_long=Edge+Normalization&provider_long=the+Translator+Consortium
   x-translator:
     component: Utility
     team:
