@@ -23,7 +23,7 @@ tags:
   - name: translator
 servers:
   - description: Default server
-    url: https://edgenormalization-sri.renci.org/apidocs/
+    url: https://edgenormalization-sri.renci.org/
 paths:
   /resolve_predicate:
     get:
