@@ -6,7 +6,7 @@
 
 The [Biolink Model](https://biolink.github.io/biolink-model/) defines allowed predicates in the Translator ecosystem.  Ingesting data from arbitrary sources requires mapping predicates in those sources to Translator predicates.
 
-The [Edge Normalization Service](https://edgenormalization-sri.renci.org/apidocs) can find predicates if they have an exact mapping in the model.  The EdgeNormalization service takes this a step further, and attempts to find the best match to a Biolink predicate, even if there is not an explicit mapping.
+The [Biolink Lookup Service](https://bl-lookup-sri.renci.org/apidocs/) can find predicates if they have an exact mapping in the model.  The EdgeNormalization service takes this a step further, and attempts to find the best match to a Biolink predicate, even if there is not an explicit mapping.
 
 Most users will use the [public service](https://edgenormalization-sri.renci.org), but instructions for deploying a new instance are given below.
 
