@@ -8,7 +8,7 @@ The [Biolink Model](https://biolink.github.io/biolink-model/) defines allowed pr
 
 The [Biolink Lookup Service](https://bl-lookup-sri.renci.org/apidocs/) can find predicates if they have an exact mapping in the model.  The EdgeNormalization service takes this a step further, and attempts to find the best match to a Biolink predicate, even if there is not an explicit mapping.
 
-Most users will use the [public service](https://edgenormalization-sri.renci.org), but instructions for deploying a new instance are given below.
+Most users will use the [public service](https://edgenormalization-sri.renci.org/apidocs/), but instructions for deploying a new instance are given below.
 
 Examples of calling the service are given in the [examples notebook](documentation/EdgeNormalization.ipynb).
 
