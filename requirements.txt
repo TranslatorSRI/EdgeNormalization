@@ -1,6 +1,6 @@
 requests
 sparqlwrapper
-sanic==19.12.2
+sanic==20.12.7
 pyyaml
 swagger_ui_bundle
 jinja2
